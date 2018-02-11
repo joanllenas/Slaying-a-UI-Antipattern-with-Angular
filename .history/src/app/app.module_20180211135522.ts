@@ -1,11 +1,8 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
-import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
 
 
 import { AppComponent } from './app.component';
-import { SunriseSunsetService } from './sunriseSunset.service';
 
 
 @NgModule({
@@ -13,11 +10,9 @@ import { SunriseSunsetService } from './sunriseSunset.service';
     AppComponent
   ],
   imports: [
-    BrowserModule,
-    HttpClientModule,
-    FormsModule
+    BrowserModule
   ],
-  providers: [SunriseSunsetService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -1,0 +1,19 @@
+<!--The content below is only a placeholder and can be replaced.-->
+<form #sunriseSunsetForm="ngForm">
+  <section>
+    <h2>Sunset and sunrise times</h2>
+    <p>
+      <label for="lat">
+        Latitude (-90, 90):
+      </label>
+      <input type="number" id="lat" name="lat" [ngModel]="lat" min="-90" max="90">
+    </p>
+    <p>
+      <label for="lng">
+        Longitude (-180, 180):
+      </label>
+      <input type="number" id="lng" name="lng" [ngModel]="lng" min="-180" max="180">
+    </p>
+</section>
+<button (click)="sendLatLng()"></button>
+</form>

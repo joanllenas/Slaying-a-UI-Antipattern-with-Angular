@@ -21,7 +21,7 @@ export class AppComponent {
     this.sendLatLong(form.value);
   }
 
-  sendLatLong(place: Place, forceError: boolean = false) {
-    this.service.getSunriseSunsetData(place, forceError);
+  sendLatLong(place: Place) {
+    this.service.getSunriseSunsetData(place);
   }
 }

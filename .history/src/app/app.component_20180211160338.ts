@@ -1,6 +1,11 @@
 import { Component } from "@angular/core";
 import { NgForm } from "@angular/forms";
-import { SunriseSunsetService, Place } from "./sunriseSunset.service";
+
+interface Place {
+  label: string;
+  lat: number;
+  long: number;
+}
 
 @Component({
   selector: "app-root",
@@ -14,14 +19,11 @@ export class AppComponent {
     { label: "Barcelona", lat: 41.3851, long: 2.1734 }
   ];
 
-  constructor(public service: SunriseSunsetService) {}
-
   setValueAndSend(form: NgForm, place: Place) {
     form.setValue({lat: place.lat, long: place.long});
-    this.sendLatLong(form.value);
   }
 
-  sendLatLong(place: Place, forceError: boolean = false) {
-    this.service.getSunriseSunsetData(place, forceError);
+  sendLatLong(value) {
+    console.log(value);
   }
 }

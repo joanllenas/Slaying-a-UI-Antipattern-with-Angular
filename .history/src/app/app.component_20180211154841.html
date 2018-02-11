@@ -1,0 +1,24 @@
+<form class="pure-form" #form="ngForm">
+
+  <fieldset>
+    <legend>Sunset and sunrise times</legend>
+    <input type="number" placeholder="Latitude (-90, 90)" name="lat" [ngModel]="places[0].lat" min="-90" max="90">
+    <input type="number" placeholder="Longitude (-180, 180)" name="long" [ngModel]="places[0].long" min="-180" max="180">
+
+    <h3>Presets</h3>
+    <div class="pure-button-group" role="group" *ngFor="let place of places">
+      <button
+        class="pure-button"
+        (click)="form.setValue({lat: place.lat, long: place.long})">
+        {{ place.label }}
+      </button>
+    </div>
+
+  </fieldset>
+
+  <section>
+    <p>
+      <button (click)="sendLatLong(form.value)">Send</button>
+    </p>
+  </section>
+</form>

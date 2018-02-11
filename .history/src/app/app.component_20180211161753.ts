@@ -14,14 +14,14 @@ export class AppComponent {
     { label: "Barcelona", lat: 41.3851, long: 2.1734 }
   ];
 
-  constructor(public service: SunriseSunsetService) {}
+  constructor(private service: SunriseSunsetService) {}
 
   setValueAndSend(form: NgForm, place: Place) {
     form.setValue({lat: place.lat, long: place.long});
     this.sendLatLong(form.value);
   }
 
-  sendLatLong(place: Place, forceError: boolean = false) {
-    this.service.getSunriseSunsetData(place, forceError);
+  sendLatLong(place: Place) {
+    this.service.getSunriseSunsetData(place);
   }
 }

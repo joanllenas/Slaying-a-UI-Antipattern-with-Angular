@@ -3,18 +3,11 @@ body {
 }
 
 .loading {
-  border-radius: 10px;
   padding: 20px;
   background-color: lightsteelblue;
 }
 
 .error {
-  border-radius: 10px;
   padding: 20px;
   background-color: lightcoral;
-}
-
-.button-error {
-  color: white;
-  background: rgb(202, 60, 60);
 }
