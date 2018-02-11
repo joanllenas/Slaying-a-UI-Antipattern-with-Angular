@@ -14,8 +14,8 @@ export interface Place {
 
 export interface ServiceResult {
   results: {
-    sunrise:"7:27:02 AM",
-    sunset:"5:05:55 PM"
+    sunrise: string,
+    sunset: string
   },
   status: 'OK' | 'INVALID_REQUEST' | 'INVALID_DATE' | 'UNKNOWN_ERROR'
 }
@@ -38,6 +38,7 @@ export class SunriseSunsetService {
   }
   constructor(private http: HttpClient) {}
 
+  // API: https://sunrise-sunset.org/api
   getSunriseSunsetData(place: Place, forceError: boolean) {
     this.state.isLoading = true;
     this.state.error = null;
