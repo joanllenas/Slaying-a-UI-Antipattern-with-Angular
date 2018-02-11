@@ -5,6 +5,7 @@ import { catchError } from "rxjs/operators/catchError";
 import { map } from "rxjs/operators/map";
 import { delay } from "rxjs/operators/delay";
 import { of } from "rxjs/observable/of";
+import { RemoteData, NotAsked, Loading, Success, Faliure } from "./remote-data";
 
 export interface Place {
   label: string;
@@ -20,29 +21,23 @@ export interface ServiceResult {
   status: 'OK' | 'INVALID_REQUEST' | 'INVALID_DATE' | 'UNKNOWN_ERROR'
 }
 
-export interface SunriseState {
-  isLoading: boolean;
-  error: string;
-  data: {
-    sunrise: string,
-    sunset: string,
-  }
-}
-
 @Injectable()
 export class SunriseSunsetService {
-  state: SunriseState = {
-    isLoading: false,
-    error: null,
-    data: null
-  }
+  state: RemoteData<string, ServiceResult> = new NotAsked();
+
   constructor(private http: HttpClient) {}
+
+  extractSuccess() {
+    return (this.state as Success<ServiceResult>).fold();
+  }
+
+  extractFaliure() {
+    return (this.state as Faliure<string>).fold();
+  }
 
   // API: https://sunrise-sunset.org/api
   getSunriseSunsetData(place: Place, forceError: boolean) {
-    this.state.isLoading = true;
-    this.state.error = null;
-    this.state.data = null;
+    this.state = new Loading();
     const query = forceError ? `lng=-${place.long}` : `lat=${place.lat}&lng=-${place.long}`;
     this.http
       .get<ServiceResult>(`https://api.sunrise-sunset.org/json?${query}&date=today`)
@@ -50,26 +45,13 @@ export class SunriseSunsetService {
         delay(1000),
         map((data: ServiceResult) => {
           if(data.status !== 'OK') {
-            console.log('map', data.status)
             of(new Error(data.status));
           } else {
-            return {
-              isLoading: false,
-              error: null,
-              data: {
-                sunrise: data.results.sunrise,
-                sunset: data.results.sunset,
-              }
-            }
+            return new Success<ServiceResult>(data)
           }
         }),
         catchError((err: Error) => {
-          console.log('catchError', err)
-          return of({
-            isLoading: false,
-            error: err.message || 'Error loading data',
-            data: null
-          })
+          return of(new Faliure<string>(err.message))
         })
       )
       .subscribe(state => {
