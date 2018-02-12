@@ -47,6 +47,10 @@
     </form>
   </div>
 
+  <div class="pure-u-1-1 welcome" *ngIf="service.state | isNotAsked">
+    <p>Welcome, use the controls above to obtain today's sunset and sunrise times.</p>
+  </div>
+
   <div class="pure-u-1-1" *ngIf="service.state | isLoading">
     <p class="loading">
       Loading...
